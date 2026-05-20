@@ -4,7 +4,7 @@ let userAddress = "";
 
 const CONTRACTS = {
   mainnet: "0xD9A442856C234a39a81a089C06451EBAa4306a72",
-  sepolia: "0xD9A442856C234a39a81a089C06451EBAa4306a72"   // 测试网如无部署会报错
+  sepolia: "0xD9A442856C234a39a81a089C06451EBAa4306a72" // 测试网暂无，切换会失败
 };
 
 const pufferABI = [
@@ -13,46 +13,42 @@ const pufferABI = [
   "function deposit(uint256 assets, address receiver) payable returns (uint256 shares)"
 ];
 
-let currentChain = "sepolia";
+let currentChain = "mainnet";
 
 async function switchNetwork(chain) {
   currentChain = chain;
-  const targetChainId = chain === "sepolia" ? 11155111 : 1;
+  const chainId = chain === "sepolia" ? 11155111 : 1;
   try {
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0x' + targetChainId.toString(16) }]
-    });
+    await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x' + chainId.toString(16) }] });
     document.getElementById('current-network').textContent = chain === "sepolia" ? "Sepolia 测试网" : "Ethereum 主网";
-  } catch (error) {
-    alert("网络切换失败，请在 imToken 中手动切换到 " + (chain === "sepolia" ? "Sepolia" : "主网"));
+  } catch (e) {
+    alert("请在 imToken 中手动切换网络");
   }
 }
 
 async function connectWallet() {
   try {
     if (!window.ethereum) {
-      alert("请在 imToken 内置浏览器中打开此页面！");
+      alert("请在 imToken 内置浏览器中打开！");
       return;
     }
 
     provider = new ethers.BrowserProvider(window.ethereum);
     const accounts = await provider.send("eth_requestAccounts", []);
     userAddress = accounts[0];
-
     signer = await provider.getSigner();
 
-    // 更新 UI 为已连接状态
-    const connectBtn = document.getElementById('connect-btn');
-    connectBtn.textContent = "✅ 已连接";
-    connectBtn.style.background = "#00cc77";
-    connectBtn.style.cursor = "default";
+    // 更新为已连接状态
+    const btn = document.getElementById('connect-btn');
+    btn.textContent = "✅ 已连接";
+    btn.style.background = "#00cc77";
+    btn.style.pointerEvents = "none";
 
     document.getElementById('wallet-info').classList.remove('hidden');
     document.getElementById('address').textContent = userAddress.slice(0,6) + "..." + userAddress.slice(-4);
 
     await updateAllBalances();
-    alert('✅ 钱包连接成功！');
+    alert('✅ 钱包连接成功！（基于 Token Core）');
   } catch (error) {
     alert('连接失败: ' + error.message);
   }
@@ -70,28 +66,47 @@ async function updateAllBalances() {
   try {
     const pufBalance = await vaultContract.balanceOf(userAddress);
     document.getElementById('pufeth-balance').textContent = ethers.formatEther(pufBalance).slice(0,6);
-  } catch(e) { 
-    document.getElementById('pufeth-balance').textContent = "0.00"; 
-  }
+  } catch(e) { document.getElementById('pufeth-balance').textContent = "0.00"; }
 
   try {
     const rate = await vaultContract.convertToAssets(ethers.parseEther("1"));
     document.getElementById('rate').textContent = parseFloat(ethers.formatEther(rate)).toFixed(4);
-  } catch(e) {
-    document.getElementById('rate').textContent = "1.00+";
-  }
+  } catch(e) { document.getElementById('rate').textContent = "1.00+"; }
 }
 
-// 按钮事件
 document.getElementById('network-select').addEventListener('change', (e) => switchNetwork(e.target.value));
 document.getElementById('connect-btn').addEventListener('click', connectWallet);
 
 document.getElementById('stake-btn').addEventListener('click', async () => {
-  alert('✅ 演示成功！\n\n实际交易功能（ETH/stETH/wstETH）正在开发中\n当前支持连接 + 余额显示 + 汇率查询');
+  const amountStr = document.getElementById('amount').value;
+  if (!signer || parseFloat(amountStr) <= 0) {
+    alert('请先连接钱包并输入数量');
+    return;
+  }
+  if (currentChain === "sepolia") {
+    alert('Sepolia 测试网暂无 Puffer 部署，请切换到主网小额测试');
+    return;
+  }
+
+  try {
+    const vaultContract = new ethers.Contract(CONTRACTS.mainnet, pufferABI, signer);
+    alert(`即将发起质押 ${amountStr} ETH\n请在 imToken 中确认交易！`);
+
+    const tx = await vaultContract.deposit(
+      ethers.parseEther(amountStr),
+      userAddress,
+      { value: ethers.parseEther(amountStr) }
+    );
+
+    alert(`交易已发送！Hash: ${tx.hash}\n等待确认后刷新余额`);
+    setTimeout(updateAllBalances, 10000);
+  } catch (error) {
+    alert('交易取消或失败: ' + (error.shortMessage || error.message));
+  }
 });
 
 document.getElementById('unifi-btn').addEventListener('click', () => {
-  alert('UniFi Vault 演示：\n\n你可以把 pufETH 存入 UniFi Vault 赚取额外奖励\n（实际可跳转到 app.puffer.fi/vaults）');
+  window.open('https://app.puffer.fi', '_blank');
 });
 
-console.log("Puffer Mini App v2 已加载 - 支持多资产 + UniFi");
+console.log("Puffer Mini App - 完整版（含真实质押 + Token Core 兼容）");
