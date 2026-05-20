@@ -15,8 +15,8 @@
     <div class="network-select">
       <label>网络：</label>
       <select id="network-select">
-        <option value="sepolia" selected>Sepolia 测试网（推荐）</option>
-        <option value="mainnet">Ethereum 主网</option>
+        <option value="mainnet" selected>Ethereum 主网</option>
+        <option value="sepolia">Sepolia 测试网</option>
       </select>
     </div>
     
@@ -24,12 +24,11 @@
     
     <div id="wallet-info" class="hidden">
       <p class="connected-status">✅ <strong>已连接</strong></p>
-      <p>网络: <span id="current-network">Sepolia 测试网</span></p>
+      <p>网络: <span id="current-network">Ethereum 主网</span></p>
       <p>地址: <span id="address"></span></p>
       <p>ETH 余额: <span id="eth-balance">0</span> ETH</p>
     </div>
     
-    <!-- 其他部分保持不变 ... -->
     <div class="card">
       <h2>质押铸造 pufETH</h2>
       <select id="asset-select">
@@ -37,17 +36,27 @@
         <option value="stETH">stETH</option>
         <option value="wstETH">wstETH</option>
       </select>
-      <input type="number" id="amount" placeholder="输入数量" value="0.01" step="0.001">
+      <input type="number" id="amount" placeholder="输入数量 (如 0.01)" value="0.01" step="0.001">
       <div id="stake-btn" class="btn">质押并铸造 pufETH</div>
     </div>
-
-    <!-- pufETH 余额、UniFi 等保持之前版本 -->
+    
+    <div class="info">
+      <h3>你的 pufETH</h3>
+      <p>余额: <span id="pufeth-balance">0</span></p>
+      <p>当前汇率: 1 pufETH ≈ <span id="rate">1.00</span> ETH</p>
+    </div>
+    
+    <div class="unifi-card">
+      <h3>🔥 UniFi Vault 机会</h3>
+      <p>存入 pufETH 可赚取额外奖励</p>
+      <div id="unifi-btn" class="btn small">探索 UniFi Vault</div>
+    </div>
     
     <div class="safety">
       <strong>安全提醒：</strong><br>
-      • 使用 Sepolia 测试网<br>
-      • 基于 imToken Token Core 连接<br>
-      • 交易在 imToken 中确认
+      • 小额测试使用<br>
+      • 基于 imToken Token Core<br>
+      • 交易需在 imToken 确认 • 资产自托管
     </div>
   </div>
   <script src="app.js"></script>
