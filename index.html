@@ -36,7 +36,7 @@
         <option value="stETH">stETH</option>
         <option value="wstETH">wstETH</option>
       </select>
-      <input type="number" id="amount" placeholder="输入数量 (如 0.01)" value="0.01" step="0.001">
+      <input type="number" id="amount" placeholder="输入数量" value="0.01" step="0.001">
       <div id="stake-btn" class="btn">质押并铸造 pufETH</div>
     </div>
     
@@ -46,17 +46,29 @@
       <p>当前汇率: 1 pufETH ≈ <span id="rate">1.00</span> ETH</p>
     </div>
     
+    <div class="dex-card">
+      <h3>🚀 DEX 一键存入（进阶）</h3>
+      <p>任意代币 → pufETH 一站式</p>
+      <select id="dex-asset">
+        <option value="USDT">USDT</option>
+        <option value="USDC">USDC</option>
+        <option value="DAI">DAI</option>
+      </select>
+      <div id="dex-btn" class="btn small">一键兑换并质押到 pufETH</div>
+    </div>
+    
     <div class="unifi-card">
       <h3>🔥 UniFi Vault 机会</h3>
-      <p>存入 pufETH 可赚取额外奖励</p>
-      <div id="unifi-btn" class="btn small">探索 UniFi Vault</div>
+      <p>将 pufETH 存入 UniFi Vault 赚取额外 Carrot 奖励</p>
+      <div id="unifi-btn" class="btn small">进入 UniFi Vault</div>
     </div>
     
     <div class="safety">
       <strong>安全提醒：</strong><br>
-      • 小额测试使用<br>
+      • 小额测试为主<br>
       • 基于 imToken Token Core<br>
-      • 交易需在 imToken 确认 • 资产自托管
+      • 交易必须在 imToken 内确认<br>
+      • 资产永远自托管，永不泄露助记词
     </div>
   </div>
   <script src="app.js"></script>
