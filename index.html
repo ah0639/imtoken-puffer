@@ -15,22 +15,28 @@
     <div class="network-select">
       <label>网络：</label>
       <select id="network-select">
-        <option value="mainnet">Ethereum 主网</option>
         <option value="sepolia" selected>Sepolia 测试网（推荐）</option>
+        <option value="mainnet">Ethereum 主网</option>
       </select>
     </div>
     
     <div id="connect-btn" class="btn">🔗 连接钱包 (imToken)</div>
     
     <div id="wallet-info" class="hidden">
-      <p>网络: <span id="current-network">未连接</span></p>
+      <p class="connected-status">✅ <strong>已连接</strong></p>
+      <p>网络: <span id="current-network">Sepolia 测试网</span></p>
       <p>地址: <span id="address">未连接</span></p>
       <p>ETH 余额: <span id="eth-balance">0</span> ETH</p>
     </div>
     
     <div class="card">
-      <h2>质押 ETH → 铸造 pufETH</h2>
-      <input type="number" id="amount" placeholder="输入 ETH 数量" value="0.01" step="0.001">
+      <h2>质押铸造 pufETH</h2>
+      <select id="asset-select">
+        <option value="ETH">ETH</option>
+        <option value="stETH">stETH</option>
+        <option value="wstETH">wstETH</option>
+      </select>
+      <input type="number" id="amount" placeholder="输入数量" value="0.01" step="0.001">
       <div id="stake-btn" class="btn">质押并铸造 pufETH</div>
     </div>
     
@@ -40,11 +46,17 @@
       <p>当前汇率: 1 pufETH ≈ <span id="rate">1.00</span> ETH</p>
     </div>
     
+    <div class="unifi-card">
+      <h3>🔥 UniFi Vault 机会</h3>
+      <p>存入 pufETH 可获得 unifiETH，赚取额外 Carrot 奖励</p>
+      <div id="unifi-btn" class="btn small">去 UniFi Vault 存入</div>
+    </div>
+    
     <div class="safety">
       <strong>安全提醒：</strong><br>
-      • Sepolia 测试网使用（推荐）<br>
-      • 主网小心使用真实资金<br>
-      • 必须在 imToken 浏览器中打开
+      • Sepolia 测试网优先使用<br>
+      • 交易必须在 imToken 中手动确认<br>
+      • 资产自托管，永不输入助记词
     </div>
   </div>
 
