@@ -6,9 +6,8 @@ h1 { color: #00ff9f; }
   border-radius: 12px; margin: 15px 0; cursor: pointer; font-weight: bold;
 }
 .btn.small { padding: 12px; font-size: 0.95em; }
-.card, .info, .unifi-card { background: #1a1a2e; padding: 20px; border-radius: 16px; margin: 20px 0; }
+.card, .info, .unifi-card, .dex-card { background: #1a1a2e; padding: 20px; border-radius: 16px; margin: 20px 0; }
 .hidden { display: none; }
 .connected-status { color: #00ff9f; }
 .safety { background: #16213e; padding: 15px; border-radius: 12px; margin: 15px 0; color: #ffcc00; font-size: 0.9em; }
-.network-select { margin: 10px 0; }
-select { padding: 8px; border-radius: 8px; background: #1a1a2e; color: white; }
+select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 8px; background: #16213e; color: white; }
