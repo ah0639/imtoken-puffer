@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puffer 质押 Mini App</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>🐡 Puffer 质押 Mini App</h1>
+    <p>兼容 imToken • 使用 Token Core 底层</p>
+    
+    <div id="connect-btn" class="btn">连接钱包 (imToken / MetaMask)</div>
+    
+    <div id="wallet-info" class="hidden">
+      <p>地址: <span id="address"></span></p>
+      <p>ETH 余额: <span id="eth-balance">0</span> ETH</p>
+    </div>
+    
+    <div class="card">
+      <h2>质押 ETH → 铸造 pufETH</h2>
+      <input type="number" id="amount" placeholder="输入 ETH 数量" value="0.01" step="0.001">
+      <div id="stake-btn" class="btn">质押并铸造 pufETH</div>
+    </div>
+    
+    <div class="info">
+      <h3>你的 pufETH</h3>
+      <p>余额: <span id="pufeth-balance">0</span></p>
+      <p>当前汇率: 1 pufETH ≈ <span id="rate">1.00</span> ETH</p>
+    </div>
+    
+    <div class="safety">
+      <strong>安全提醒：</strong><br>
+      • 只在测试网使用<br>
+      • 永远不要输入助记词<br>
+      • 交易需在 imToken 中确认
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
