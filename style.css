@@ -11,3 +11,4 @@ h1 { color: #00ff9f; }
 .connected-status { color: #00ff9f; }
 .safety { background: #16213e; padding: 15px; border-radius: 12px; margin: 15px 0; color: #ffcc00; font-size: 0.9em; }
 select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 8px; background: #16213e; color: white; }
+.network-select { margin: 15px 0; }
